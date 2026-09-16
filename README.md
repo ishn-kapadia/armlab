@@ -1,4 +1,4 @@
-# ArmLab. Interactive Robot Kinematics Simulator
+# ArmLab. An Interactive Robot Kinematics Simulator
 
 A local, interactive engineering workbench for a planar robot with two revolute joints. Explore forward and analytical inverse kinematics, both elbow configurations, joint limits, and smooth joint-space motion. Built with TypeScript, React, Vite, SVG, and plain CSS.
 
@@ -28,13 +28,6 @@ The [demo session](examples/demo-session.json) can also be imported immediately.
 - Versioned JSON import/export with validation. Actual animation samples export as CSV.
 - Responsive laptop and small-screen layouts, labelled inputs, keyboard controls, and native accessible dialogs.
 
-**Numeric targets are staged.** Entering valid x/y coordinates stops motion and changes the target without teleporting the arm. Choose Solve now or Animate target. Dragging solves live. Empty or invalid numeric fields do not become zero; errors are shown and affected commands are disabled.
-
-**Command ownership:** manual joints, target edits, branch changes, settings application, import, and reset stop or replace the previous motion. A new animation has one owner and starts from the current pose. Pause freezes active elapsed time; resume uses a fresh clock reference. Stop retains the current pose and samples. Hiding the tab automatically pauses playback.
-
-**Settings policy:** applying settings stops motion, chooses equivalent allowed angles when possible, and clamps any remaining excluded joints to their limits. The target moves to the new tip. Trail and recording clear. Waypoints keep their original joint angles and are flagged if excluded by the new limits. Changing a link length changes their Cartesian positions. Reset session restores the initial robot and clears waypoints, trail, and recording.
-
-**Waypoint policy:** saving captures the actual valid joint pose, even if a requested Cartesian target is invalid. Playback snapshots the waypoint list when Play sequence is pressed; editing that list changes future runs. Every pose must satisfy current limits before a sequence can start. The preset is a pick-and-place-style **motion demonstration**, with no simulated grasp, payload, or contact.
 
 ## Coordinates and mathematics
 
@@ -86,38 +79,6 @@ s(u) = 3u² − 2u³
 The easing has zero endpoint velocity. Each angle is a convex combination of valid endpoints, so the whole segment stays in its interval. There is **no wrapped shortest-angle shortcut**: a move from +170° to −170° passes through 0° and remains inside [−180°, +180°]. A joint-space line generally creates a curved end-effector path.
 
 Each waypoint segment comes to rest. Acceleration is not guaranteed continuous across boundaries, and no speed, acceleration, torque, or collision constraints are enforced.
-
-## Data and bounded storage
-
-Version 1 JSON includes `format: "armlab"`, `version: 1`, explicit mm/rad units, robot settings, current joint pose, target, selected branch, segment duration, and named joint waypoints. Import validates the complete document before replacing any state. Unknown fields are discarded. Invalid waypoints under edited limits can be retained in a session but cannot be played until made valid. Import has a 256 KB size limit.
-
-CSV columns:
-
-```text
-elapsed_s,theta1_deg,theta2_deg,x_mm,y_mm
-```
-
-The recorder captures the initial pose, actual rendered samples at intervals of at least 50 ms, and the final or stopped pose. Timing is not a fixed sampling frequency: frame scheduling can lengthen intervals. Elapsed time excludes pauses. A new run replaces the previous recording. At most the most recent 12,000 samples and 600 trail points are retained. View toggles hide layers without stopping collection. No data is saved automatically across page reloads.
-
-Export dialogs provide a full text preview, a Download file link, and Select all text for embedded browsers with download restrictions. After selecting, use Ctrl+C or Command+C and save the text with the filename shown. The application does not claim that a file has been saved merely because a download was requested.
-
-## Architecture
-
-```text
-src/core/kinematics.ts    Pure geometry, FK, IK, limits, validation
-src/core/motion.ts        Pure interpolation, elapsed-time state, bounded records
-src/core/commands.ts      Target failure and settings-revalidation policies
-src/core/session.ts       Versioned parser, waypoint types, demo preset
-src/core/*.test.ts        Mathematical and transition tests
-src/useSimulator.ts      Browser clock, command ownership, React state
-src/components/          SVG scene, numeric inputs, dialogs
-src/App.tsx              Controls, inspector, data and waypoint flows
-src/styles.css           Responsive visual design
-examples/                Importable demonstration session
-docs/                    Engineering, interview, and validation material
-```
-
-No robotics functions depend on React or SVG. The renderer performs one explicit y-axis inversion: screenY = centreY − worldY × scale. Pointer input applies the inverse transform using the SVG screen matrix, including browser scaling.
 
 ## Engineering and portfolio material
 
