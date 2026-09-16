@@ -4,38 +4,6 @@ A local, interactive engineering workbench for a planar robot with two revolute 
 
 This is **kinematics and trajectory simulation**, not a physics engine.
 
-![ArmLab running locally](docs/screenshot.png)
-
-## Run locally
-
-Use **Node.js 24 LTS** (minimum 22.18) and pnpm 11.19.0. From this project directory:
-
-```sh
-pnpm install --frozen-lockfile
-pnpm dev
-```
-
-Open the Local URL printed by Vite, normally **http://127.0.0.1:5173/**. Leave that terminal running. Press Ctrl+C to stop the server.
-
-If pnpm is not installed, Node's npm can run the pinned package manager without a global installation:
-
-```sh
-npx --yes pnpm@11.19.0 install --frozen-lockfile
-npx --yes pnpm@11.19.0 dev
-```
-
-The project is delivered in `outputs/armlab` inside the attached workspace. Enter that directory before running these commands. A lockfile, `pnpm-lock.yaml`, pins the installed dependency tree. `pnpm-workspace.yaml` permits the esbuild package's required installation step.
-
-### Production build and preview
-
-```sh
-pnpm build
-pnpm preview
-```
-
-Open the URL printed by the preview command, normally port 4173. The build produces `dist/`; it must be served over HTTP, not opened as a file. All calculations run in your browser. No accounts, backend, API keys, external images, or paid services are required. Package installation needs registry access; an installed build runs offline.
-
-**Restricted desktop environment:** the delivered production preview was tested at http://127.0.0.1:5173/. This session's sandbox prevented the development bundler from reading an ancestor directory, so browser validation used the production build. See [validation](docs/validation.md) for the exact commands and distinction. Native Vite configuration loading avoids a separate configuration-bundling restriction.
 
 ## Try it in one minute
 
@@ -166,9 +134,3 @@ Use `pnpm test:watch` during development. Tests cover known FK configurations, F
 - [Engineering notes and worked example](docs/engineering-notes.md)
 - [90-second demonstration and interview preparation](docs/demo-and-interview.md)
 - [Executed checks and limitations](docs/validation.md)
-
-## Honest limitations
-
-ArmLab is 2D with two joints and ideal rigid links. It has no dynamics, torque calculations, gravity, inertia, motors, collision checking, obstacles, gripping, payloads, or real hardware validation. A path that is kinematically valid can pass through objects or through the arm itself. No physical velocity or acceleration feasibility is implied. This is an educational portfolio project, not a controller or safety tool.
-
-The implementation and documentation were created with AI assistance. Before presenting it, reproduce the worked example, run the tests, inspect the core functions, and explain the choices in your own words.
