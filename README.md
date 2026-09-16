@@ -132,5 +132,4 @@ Use `pnpm test:watch` during development. Tests cover known FK configurations, F
 ## Engineering and portfolio material
 
 - [Engineering notes and worked example](docs/engineering-notes.md)
-- [90-second demonstration and interview preparation](docs/demo-and-interview.md)
 - [Executed checks and limitations](docs/validation.md)
