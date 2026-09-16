@@ -119,16 +119,6 @@ docs/                    Engineering, interview, and validation material
 
 No robotics functions depend on React or SVG. The renderer performs one explicit y-axis inversion: screenY = centreY − worldY × scale. Pointer input applies the inverse transform using the SVG screen matrix, including browser scaling.
 
-## Tests
-
-```sh
-pnpm test
-pnpm typecheck
-pnpm build
-```
-
-Use `pnpm test:watch` during development. Tests cover known FK configurations, FK/IK round trips, both branches, boundaries, invalid targets and inputs, equivalent angles, limits, degeneracy, singularities, interpolation, pause/resume/stop, buffer bounds, and session validation. [Validation results](docs/validation.md) distinguish automated checks, browser checks, and remaining unverified behavior.
-
 ## Engineering and portfolio material
 
 - [Engineering notes and worked example](docs/engineering-notes.md)
