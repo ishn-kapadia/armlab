@@ -1,4 +1,4 @@
-# ArmLab — Interactive Robot Kinematics Simulator
+# ArmLab. Interactive Robot Kinematics Simulator
 
 A local, interactive engineering workbench for a planar robot with two revolute joints. Explore forward and analytical inverse kinematics, both elbow configurations, joint limits, and smooth joint-space motion. Built with TypeScript, React, Vite, SVG, and plain CSS.
 
